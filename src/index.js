@@ -1,15 +1,17 @@
 /*
   Checkbox
 
-  react checkbox, created with icons
+  react checkbox, created with emoji icons
+
+  Some checkmark options ( any emoticon)
+  ✓ ✔ ︎ ✅ √ ☑️ 🏁 ✓ ✔︎ ✔️ ✓ 𐄂
+  🍄 🖖🏻 🍒 🚀 🔥 ⏺ 👎🏻 👍🏻
   ----------------------------------
   TODO: refactor iconStyles to be sizable from props
   TODO: expose icons as props, for cutomization
 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/lib/md';
 import styles from './styles';
 
 class CheckBox extends Component {
@@ -17,7 +19,7 @@ class CheckBox extends Component {
     super(props);
     this.state = {
       checked: false
-    }
+    };
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -25,33 +27,51 @@ class CheckBox extends Component {
     const { checked } = this.props;
     this.setState({
       checked
-    })
+    });
   }
 
-  handleClick(e) {
+  handleClick() {
     const checked = !this.state.checked;
     const { name, type } = this.props;
     this.setState({
       checked
     }, () => {
-      // expected .target{} cheat
-      this.props.onChange({target:{name, type, checked}})
-    })
+      // mock expected input target{}
+      this.props.onChange({target:{name, type, checked}});
+    });
+  }
+  renderIcon() {
+    const { unCheckedIcon, checkedIcon } = this.props;
+    const icon = this.state.checked ? checkedIcon : unCheckedIcon;
+    return (
+      <div style={styles.icon} className="xs-checkbox-icon">
+        {icon}
+      </div>
+    );
+  }
+
+  renderText() {
+    const { text, checkedText, unCheckedText } = this.props;
+    const { checked } = this.state;
+    let labelText = '';
+    if (text.length === 0) {
+      labelText = checked ? checkedText : unCheckedText;
+    } else {
+      labelText = text;
+    }
+
+    return (
+      <div style={styles.text} className="xs-checkbox-label">
+        {labelText}
+      </div>
+    );
   }
 
   render () {
-    const iconStyles = {color: '#ccc', size: '20px' };
     return (
-      <div style={styles.container} onClick={this.handleClick}>
-        <div style={styles.icon}>
-          {this.state.checked ?
-            <MdCheckBox {...iconStyles} /> :
-            <MdCheckBoxOutlineBlank {...iconStyles} />
-          }
-        </div>
-        <div style={styles.text}>
-          {this.props.labelText}
-        </div>
+      <div style={styles.container} onClick={this.handleClick} className="xs-checkbox">
+        { this.renderIcon() }
+        { this.renderText() }
       </div>
     );
   }
@@ -61,16 +81,23 @@ CheckBox.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
   checked: PropTypes.bool,
-  labeltext: PropTypes.string,
+  text: PropTypes.string,
+  checkedText: PropTypes.string,
+  unCheckedText: PropTypes.string,
   onChange: PropTypes.func,
-}
+  checkedIcon: PropTypes.string,
+  unCheckedIcon: PropTypes.string,
+};
 
 CheckBox.defaultProps = {
   type: 'checkbox', // internal
   checked: false,
-  labeltext: '',
+  text: '',
+  checkedIcon: '✔' ,
+  unCheckedIcon: ' ' ,
+  checkedText: PropTypes.string,
+  unCheckedText: PropTypes.string,
   onChange: () => {},
-}
-
+};
 
 export default CheckBox;

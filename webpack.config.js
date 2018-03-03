@@ -1,14 +1,19 @@
-var path = require('path');
+const webpack = require('webpack');
+const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const outputFolder = path.resolve(__dirname, 'build');
+const inputFolder = path.resolve(__dirname, 'src');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    index: './src/index.js',
+  },
   output: {
     path: outputFolder,
     filename: 'index.js',
     libraryTarget: 'commonjs2'
-    // THIS IS THE MOST IMPORTANT LINE! :mindblow: I wasted more than 2 days until realize this was the line most important in all this guide.
   },
   module: {
       rules: [
@@ -23,21 +28,28 @@ module.exports = {
           },
         },
         {
+          enforce: "pre",
+          test: /\.js$/,
+          exclude: /node_modules/,
+          loader: "eslint-loader",
+        },
+        {
           test: /react-icons\/(.)*(.js)$/,
           loader: 'babel-loader',
           query: {
             presets: ['es2015', 'react'],
           },
         },
-        {
-          test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          loader: 'url-loader?limit=10000&mimetype=application/font-woff',
-        },
-        {
-          test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          loader: 'file-loader',
-        },
       ],
     },
+    plugins: [
       new CleanWebpackPlugin([outputFolder]),
+      new UglifyJSPlugin({
+        sourceMap: true,
+      }),
+
+    ],
+    externals: {
+      react: 'commonjs react'
+    }
 };
