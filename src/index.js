@@ -3,12 +3,11 @@
 
   react checkbox, created with emoji icons
 
-  Some checkmark options ( any emoticon)
+  Some checkmark options (any emoji)
   ✓ ✔ ︎ ✅ √ ☑️ 🏁 ✓ ✔︎ ✔️ ✓ 𐄂
   🍄 🖖🏻 🍒 🚀 🔥 ⏺ 👎🏻 👍🏻
   ----------------------------------
-  TODO: refactor iconStyles to be sizable from props
-  TODO: expose icons as props, for cutomization
+  TODO: refactor styles from props
 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -54,6 +53,7 @@ class CheckBox extends Component {
     const { text, checkedText, unCheckedText } = this.props;
     const { checked } = this.state;
     let labelText = '';
+    // 'text' prop implies no checkedText or unCheckedText
     if (text.length === 0) {
       labelText = checked ? checkedText : unCheckedText;
     } else {
