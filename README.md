@@ -18,21 +18,32 @@ yarn add xs-checkbox
 ```
 
 # Usage
+Three examples below, show
+1. Simplest: default checkmark
+2. Custom Icon, shows when 'checked'
+3. Check & unchecked icons, checked & unchecked text
 
 ```js
 import CheckBox from 'xs-checkbox'
 
 <CheckBox
   checked
-  text='Option 1'
-  name='myCheckbox1'
+  text='Default checkmark'
+  name='Checkbox1'
+  onChange={this.handleCheckBoxChange}
+/>
+
+<CheckBox
+  checked
+  text='Much-room to grow'
+  name='Checkbox3'
   checkedIcon='🍄'
   onChange={this.handleCheckBoxChange}
 />
 
 <CheckBox
   checked
-  name='myVote'
+  name='emperorsChoice'
   checkedIcon='👍🏻'
   unCheckedIcon='👎🏻'
   checkedText='Yeah, baby!'
