@@ -1,9 +1,9 @@
 # xs-checkbox
 
-## Simple CheckBox with, includes
+## Simple CheckBox, with
 * user customizable icons
 * check/unchecked label text
-* returns e.target for controlled forms
+* returns expected e.target object for controlled forms
 
 # Installation
 
