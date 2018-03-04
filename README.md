@@ -26,6 +26,14 @@ Three examples below, show
 ```js
 import CheckBox from 'xs-checkbox'
 
+...
+
+handleCheckBoxChange(e){
+  // do something with checked value
+  console.log(`${e.target.name}, checked: ${e.target.checked}`)
+}
+...
+
 <CheckBox
   checked
   text='Default checkmark'
